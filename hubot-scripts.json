@@ -2,6 +2,5 @@
 "redis-brain.coffee",
 "shipit.coffee",
 "bitcoin.coffee",
-"ambush.coffee",
-"github-search.coffee"
+"ambush.coffee"
 ]
