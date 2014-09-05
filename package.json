@@ -26,7 +26,8 @@
     "cheerio": "",
     "hubot-slack": "~2.2.0",
     "githubot": "0.4.1",
-    "node-trello": "latest"
+    "node-trello": "latest",
+    "twit": "1.1.8"
   },
   "engines": {
     "node": ">= 0.8.x",
