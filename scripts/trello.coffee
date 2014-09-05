@@ -69,6 +69,5 @@ showCards = (msg, list) ->
       msg.send "There was an error showing the list."
       return
 
-    msg.send "Cards in " + data.name + ":"
     msg.send "- " + card.name for card in data.cards
     
