@@ -38,7 +38,7 @@ module.exports = (robot) ->
       return
     createCard msg, list, cardName
     
-  robot.respond /show (new|main|side|release)/i, (msg) ->
+  robot.respond /(show|list|cards) (new|main|side|release)/i, (msg) ->
     list = msg.match[1]
     showCards msg, list
 
@@ -69,5 +69,5 @@ showCards = (msg, list) ->
       msg.send "There was an error showing the list."
       return
 
-    msg.send "- ##{card.url}|#{card.idShort} #{card.name}" for card in data.cards
+    msg.send "#{card.url}|##{card.idShort} - #{card.name}" for card in data.cards
     
