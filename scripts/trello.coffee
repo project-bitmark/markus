@@ -9,8 +9,8 @@
 #   HUBOT_TRELLO_TOKEN - Trello API token
 #
 # Commands:
-#   hubot trello card <name> - Create a new Trello card
-#   hubot trello show - Show cards on list
+#   hubot card <list> <name> - Create a new Trello card list can be (new|main|side|channel)
+#   hubot show <list> - Show cards on list (new|main|side|channel)
 #
 # Notes:
 #   To get your key, go to: https://trello.com/1/appKey/generate
@@ -38,8 +38,8 @@ module.exports = (robot) ->
       return
     createCard msg, list, cardName
     
-  robot.respond /show/i, (msg) ->
-    showCards msg
+  robot.respond /show (new|main|side|release)/i, (msg) ->
+    showCards msg, list
 
 createCard = (msg, list, cardName) ->
   Trello = require("node-trello")
@@ -55,10 +55,15 @@ createCard = (msg, list, cardName) ->
       return
     msg.send data.url
 
-showCards = (msg) ->
+showCards = (msg, list) ->
   Trello = require("node-trello")
   t = new Trello(process.env.HUBOT_TRELLO_KEY, process.env.HUBOT_TRELLO_TOKEN)
-  t.get "/1/lists/"+process.env.HUBOT_TRELLO_LIST, {cards: "open"}, (err, data) ->
+  listid = switch list
+    when 'new' then '5409fb04c5e14a561ae818a3';
+    when 'main' then '53d8fbf05f8fc0cc4b9c2f7c';
+    when 'side' then '53d92c5a7259e19b7c441cc9';
+    when 'release' then '53d92eb95a287795dd198e37';
+  t.get "/1/lists/"+listid, {cards: "open"}, (err, data) ->
     if err
       msg.send "There was an error showing the list."
       return
