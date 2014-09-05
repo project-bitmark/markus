@@ -5,7 +5,7 @@
 #   hubot network - show network details
 
 module.exports = (robot) ->
-  robot.respond /network/i, (msg) ->
+  robot.respond /(network|net)/i, (msg) ->
     robot.http("http://bitmark.co/statistics/data/livesummary.json")
       .get() (err, res, body) ->
         json = JSON.parse(body)
@@ -18,3 +18,13 @@ module.exports = (robot) ->
         net += "Hashrate Averages: #{hl} #{hm} #{hs} - "
         net += "Change: #{change} blocks"
         msg.send net
+
+  robot.respond /(poloniex|polo)/i, (msg) ->
+    robot.http("https://poloniex.com/public?command=returnTicker")
+      .get() (err, res, body) ->
+        json = JSON.parse(body)
+        btm = json.BTC_BTM
+        price = "Last: #{btm.last} - "
+        price += "Change: #{btm.percentChange}% - "
+        price += "Volume: #{btm.baseVolume} BTC / #{btm.quoteVolume} BTM"
+        msg.send price
