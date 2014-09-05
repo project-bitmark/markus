@@ -25,7 +25,8 @@
     "hubot-scripts": ">= 2.5.0 < 3.0.0",
     "cheerio": "",
     "hubot-slack": "~2.2.0",
-    "githubot": "0.4.1"
+    "githubot": "0.4.1",
+    "node-trello": "latest"
   },
   "engines": {
     "node": ">= 0.8.x",
