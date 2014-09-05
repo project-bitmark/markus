@@ -69,5 +69,5 @@ showCards = (msg, list) ->
       msg.send "There was an error showing the list."
       return
 
-    msg.send "- #{card.url}|#{card.name}" for card in data.cards
+    msg.send "- ##{card.url}|#{card.idShort} #{card.name}" for card in data.cards
     
