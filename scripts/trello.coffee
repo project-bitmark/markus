@@ -39,6 +39,7 @@ module.exports = (robot) ->
     createCard msg, list, cardName
     
   robot.respond /show (new|main|side|release)/i, (msg) ->
+    list = msg.match[1]
     showCards msg, list
 
 createCard = (msg, list, cardName) ->
