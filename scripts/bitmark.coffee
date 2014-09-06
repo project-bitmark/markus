@@ -13,8 +13,10 @@ module.exports = (robot) ->
         hm = Math.round(json.data.hashrate_m/1000000) + " MH/s"
         hs = Math.round(json.data.hashrate_s/1000000) + " MH/s"
         change = (Math.ceil(json.generated/720)*720)-json.generated
+        target = (((json.data.current.difficulty*4294967296)/120)/1000000) + " MH/s"
         net = "Block: http://bitmark.co:3000/block/#{json.data.current.hash}|#{json.generated} - "
         net += "Difficulty: #{json.data.current.difficulty} - "
+        net += "Target Hashrate: #{target} - "
         net += "Hashrate Averages: #{hl} #{hm} #{hs} - "
         net += "Change: #{change} blocks"
         msg.send net
