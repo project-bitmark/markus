@@ -1,6 +1,5 @@
 [
 "redis-brain.coffee",
 "shipit.coffee",
-"bitcoin.coffee",
-"points.coffee"
+"bitcoin.coffee"
 ]
