@@ -34,11 +34,20 @@ module.exports = (robot) ->
         award_points(msg, msg.match[1], 1)
         save(robot)
  
+    robot.hear /@?([\w\S]+): (\+\+)$/i, (msg) ->
+        award_points(msg, msg.match[1], 1)
+        save(robot)
+        
     robot.hear /@?([\w\S]+)(\+\?)$/i, (msg) ->
         username = msg.match[1]
         points[username] ?= 0
         msg.send username + ' has ' + points[username] + '₥'
-                
+ 
+     robot.hear /@?([\w\S]+): (\+\?)$/i, (msg) ->
+        username = msg.match[1]
+        points[username] ?= 0
+        msg.send username + ' has ' + points[username] + '₥'
+                       
     robot.hear /mark @?([\w\S]+) (\d+)$/i, (msg) ->
         award_points(msg, msg.match[1], msg.match[2])
         save(robot)
