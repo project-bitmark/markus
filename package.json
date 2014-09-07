@@ -27,9 +27,7 @@
     "hubot-slack": "~2.2.0",
     "githubot": "0.4.1",
     "node-trello": "latest",
-    "twit": "1.1.8",
-    "underscore": ">= 1.0.0",
-    "clark": "0.0.6"
+    "twit": "1.1.8"
   },
   "engines": {
     "node": ">= 0.8.x",
