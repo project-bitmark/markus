@@ -22,17 +22,19 @@
 #   carmstrong
 
 module.exports = (robot) ->
-  robot.respond /card (new|main|side|release) (.*)/i, (msg) ->
+  robot.hear /card (new|main|side|release) (.*)/i, (msg) ->
     list = msg.match[1]
     cardName = msg.match[2]
     if not cardName.length
       msg.send "You must give the card a name"
       return
-    if not process.env.HUBOT_TRELLO_KEY
-      msg.send "Error: Trello app key is not specified"
-    if not process.env.HUBOT_TRELLO_TOKEN
-      msg.send "Error: Trello token is not specified"
-    if not (process.env.HUBOT_TRELLO_KEY and process.env.HUBOT_TRELLO_TOKEN)
+    createCard msg, list, cardName
+    
+  robot.respond /card (new|main|side|release) (.*)/i, (msg) ->
+    list = msg.match[1]
+    cardName = msg.match[2]
+    if not cardName.length
+      msg.send "You must give the card a name"
       return
     createCard msg, list, cardName
     
