@@ -2,10 +2,12 @@
 #   Bitmark Related Data
 #
 # Commands:
-#   hubot network - show network details
+#   network|net - show network details
+#   supply - show currency supply details
+#   poloniex|polo - show poloniex exchange details
 
 module.exports = (robot) ->
-  robot.respond /(network|net)/i, (msg) ->
+  robot.hear /(network|net)$/i, (msg) ->
     robot.http("http://bitmark.co/statistics/data/livesummary.json")
       .get() (err, res, body) ->
         json = JSON.parse(body)
@@ -13,15 +15,17 @@ module.exports = (robot) ->
         hm = Math.round(json.data.hashrate_m/1000000) + " MH/s"
         hs = Math.round(json.data.hashrate_s/1000000) + " MH/s"
         change = (Math.ceil(json.generated/720)*720)-json.generated
+        cte = (json.data.current.time-json.data.lastchange.time)/(720-change)
+        cte = (new Date((cte*720)+json.data.lastchange.time)*1000)).toString();
         target = Math.floor(((json.data.current.difficulty*4294967296)/120)/1000000) + " MH/s"
         net = "Block: http://bitmark.co:3000/block/#{json.data.current.hash}|#{json.generated} - "
         net += "Difficulty: #{json.data.current.difficulty} - "
         net += "Target Hashrate: #{target} - "
         net += "Hashrate Averages: #{hl} #{hm} #{hs} - "
-        net += "Change: #{change} blocks"
+        net += "Change: #{change} blocks (#{cte})"
         msg.send net
 
-  robot.respond /(supply)/i, (msg) ->
+  robot.hear /(supply)$/i, (msg) ->
     robot.http("http://bitmark.co/statistics/data/livesummary.json")
       .get() (err, res, body) ->
         json = JSON.parse(body)
@@ -33,7 +37,7 @@ module.exports = (robot) ->
         net += "there is #{diff} less BTM in the world"
         msg.send net
         
-  robot.respond /(poloniex|polo)/i, (msg) ->
+  robot.hear /(poloniex|polo)$/i, (msg) ->
     robot.http("https://poloniex.com/public?command=returnTicker")
       .get() (err, res, body) ->
         json = JSON.parse(body)
