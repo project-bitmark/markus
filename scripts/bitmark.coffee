@@ -7,7 +7,7 @@
 #   poloniex|polo - show poloniex exchange details
 
 module.exports = (robot) ->
-  robot.hear /(network|net)$/i, (msg) ->
+  robot.hear /^(network|net)$/i, (msg) ->
     robot.http("http://bitmark.co/statistics/data/livesummary.json")
       .get() (err, res, body) ->
         json = JSON.parse(body)
@@ -25,7 +25,7 @@ module.exports = (robot) ->
         net += "Change: #{change} blocks (#{cte})"
         msg.send net
 
-  robot.hear /(supply)$/i, (msg) ->
+  robot.hear /^(supply)$/i, (msg) ->
     robot.http("http://bitmark.co/statistics/data/livesummary.json")
       .get() (err, res, body) ->
         json = JSON.parse(body)
@@ -37,7 +37,7 @@ module.exports = (robot) ->
         net += "there is #{diff} less BTM in the world"
         msg.send net
         
-  robot.hear /(poloniex|polo)$/i, (msg) ->
+  robot.hear /^(poloniex|polo)$/i, (msg) ->
     robot.http("https://poloniex.com/public?command=returnTicker")
       .get() (err, res, body) ->
         json = JSON.parse(body)
