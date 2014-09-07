@@ -31,7 +31,7 @@ module.exports = (robot) ->
         points = robot.brain.data.points or {}
 
     robot.hear /([\w\S]+)(\+\+)$/i, (msg) ->
-        award_points(msg, 1, msg.match[1])
+        award_points(msg, msg.match[1], 1)
         save(robot)
  
     robot.hear /([\w\S]+)(\+\?)$/i, (msg) ->
