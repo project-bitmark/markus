@@ -9,8 +9,8 @@
 #   HUBOT_TRELLO_TOKEN - Trello API token
 #
 # Commands:
-#   hubot card <list> <name> - Create a new Trello card list can be (new|main|side|channel)
-#   hubot show <list> - Show cards on list (new|main|side|channel)
+#   hubot card <list> <name> - Create a new Trello card list can be (new|main|side|channel|marking|markus)
+#   hubot show <list> - Show cards on list (new|main|side|channel|marking|markus)
 #
 # Notes:
 #   To get your key, go to: https://trello.com/1/appKey/generate
@@ -22,7 +22,7 @@
 #   carmstrong
 
 module.exports = (robot) ->
-  robot.hear /^card (new|main|side|release) (.*)/i, (msg) ->
+  robot.hear /^card (new|main|side|release|marking|markus) (.*)/i, (msg) ->
     list = msg.match[1]
     cardName = msg.match[2]
     if not cardName.length
@@ -38,7 +38,7 @@ module.exports = (robot) ->
       return
     createCard msg, list, cardName
     
-  robot.respond /^(show|list|cards) (new|main|side|release)/i, (msg) ->
+  robot.respond /^(show|list|cards) (new|main|side|release|marking|markus)/i, (msg) ->
     list = msg.match[2]
     showCards msg, list
 
@@ -49,6 +49,8 @@ createCard = (msg, list, cardName) ->
     when 'main' then '53d8fbf05f8fc0cc4b9c2f7c';
     when 'side' then '53d92c5a7259e19b7c441cc9';
     when 'release' then '53d92eb95a287795dd198e37';
+    when 'marking' then '540ddb32490c6b8766ef6285';
+    when 'markus' then '540ddac70e84a593fcb259b1';
   t = new Trello(process.env.HUBOT_TRELLO_KEY, process.env.HUBOT_TRELLO_TOKEN)
   t.post "/1/cards", {name: cardName, idList: listid}, (err, data) ->
     if err
@@ -63,6 +65,8 @@ showCards = (msg, list) ->
     when 'main' then '53d8fbf05f8fc0cc4b9c2f7c';
     when 'side' then '53d92c5a7259e19b7c441cc9';
     when 'release' then '53d92eb95a287795dd198e37';
+    when 'marking' then '540ddb32490c6b8766ef6285';
+    when 'markus' then '540ddac70e84a593fcb259b1';
   t.get "/1/lists/"+listid, {cards: "open"}, (err, data) ->
     if err
       msg.send "There was an error showing the list."
