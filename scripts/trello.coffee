@@ -22,7 +22,7 @@
 #   carmstrong
 
 module.exports = (robot) ->
-  robot.hear /card (new|main|side|release) (.*)/i, (msg) ->
+  robot.hear /^card (new|main|side|release) (.*)/i, (msg) ->
     list = msg.match[1]
     cardName = msg.match[2]
     if not cardName.length
@@ -30,7 +30,7 @@ module.exports = (robot) ->
       return
     createCard msg, list, cardName
     
-  robot.respond /card (new|main|side|release) (.*)/i, (msg) ->
+  robot.respond /^card (new|main|side|release) (.*)/i, (msg) ->
     list = msg.match[1]
     cardName = msg.match[2]
     if not cardName.length
@@ -38,7 +38,7 @@ module.exports = (robot) ->
       return
     createCard msg, list, cardName
     
-  robot.respond /(show|list|cards) (new|main|side|release)/i, (msg) ->
+  robot.respond /^(show|list|cards) (new|main|side|release)/i, (msg) ->
     list = msg.match[2]
     showCards msg, list
 
