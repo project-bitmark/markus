@@ -23,7 +23,7 @@ module.exports = (robot) ->
         net += "Difficulty: #{json.data.current.difficulty} - "
         net += "Target Hashrate: #{target} - "
         net += "Hashrate Averages: #{hl} #{hm} #{hs} - "
-        net += "Change: #{change} blocks (#{cte})"
+        net += "Change: #{change}"
         msg.send net
 
   robot.hear /^(supply)$/i, (msg) ->
