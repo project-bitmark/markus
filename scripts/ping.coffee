@@ -22,4 +22,7 @@ module.exports = (robot) ->
 
   robot.respond /DIE$/i, (msg) ->
     msg.send "LOL, you die."
+    
+  robot.hear /^pad$/i, (msg) ->
+    msg.send "http://piratepad.nl/ep/pad/newpad|newpad"
 
