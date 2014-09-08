@@ -66,7 +66,7 @@ module.exports = (robot) ->
     , (err, reply) ->
       if err
         data = JSON.parse(err.data).errors[0]
-        msg.reply "I can't do that. #{data.message} (error #{data.code})"
+        msg.reply "Dave.. I'm afriad I can't let you do that... #{data.message} (error #{data.code})"
         return
       if not reply['text']
         return msg.reply "Hmmm.. I'm not sure if the tweet posted. Check the account."
