@@ -30,14 +30,6 @@ module.exports = (robot) ->
       return
     createCard msg, list, cardName
     
-  robot.respond /^card (new|main|side|release) (.*)/i, (msg) ->
-    list = msg.match[1]
-    cardName = msg.match[2]
-    if not cardName.length
-      msg.send "You must give the card a name"
-      return
-    createCard msg, list, cardName
-    
   robot.respond /^(show|list|cards) (new|main|side|release|marking|markus)/i, (msg) ->
     list = msg.match[2]
     showCards msg, list
