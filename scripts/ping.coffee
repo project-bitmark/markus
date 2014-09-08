@@ -24,6 +24,7 @@ module.exports = (robot) ->
     msg.send "LOL, you die."
     
   robot.hear /^pad$/i, (msg) ->
-    now = (new Date()).now()/1000
-    msg.send "http://piratepad.nl/ep/pad/create?padId=bitmark-#{now}|newpad"
+    n = new Date()
+    n = n.now()/1000
+    msg.send "http://piratepad.nl/ep/pad/create?padId=bitmark-#{n}|newpad"
 
