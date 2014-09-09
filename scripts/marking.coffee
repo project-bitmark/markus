@@ -50,6 +50,7 @@ module.exports = (robot) ->
                        
     robot.hear /mark (.*) ([\d.]+)$/i, (msg) ->
     	names = msg.match[1].replace('@', '').split(/[, ]+/)
-        award_points(msg, name, msg.match[2]) for name in names
+    	
+        award_points(msg, name, msg.match[2]) for nm in names
         save(robot)
        
