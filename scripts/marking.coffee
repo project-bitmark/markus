@@ -48,7 +48,8 @@ module.exports = (robot) ->
         points[username] ?= 0
         msg.send username + ' has ' + points[username] + '₥'
                        
-    robot.hear /mark @?([\w\S]+) ([\d.]+)$/i, (msg) ->
-        award_points(msg, msg.match[1], msg.match[2])
+    robot.hear /mark (.*) ([\d.]+)$/i, (msg) ->
+    	names = msg.match[1].replace('@', '').split(/[, ]+/)
+        award_points(msg, name, msg.match[2]) for name in names
         save(robot)
        
