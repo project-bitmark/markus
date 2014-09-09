@@ -48,7 +48,7 @@ module.exports = (robot) ->
         btm = json.BTC_BTM
         price = "Last: #{btm.last} - "
         price += "Change: #{btm.percentChange}% - "
-        price += "Volume: #{btm.baseVolume} BTC / #{btm.quoteVolume} BTM"
+        price += "Volume: #{btm.baseVolume} BTC / #{btm.quoteVolume} BTM - "
         vwa = (btm.baseVolume/btm.quoteVolume).toFixed(8)
         price += "VWAP: #{vwa}"
         msg.send price
