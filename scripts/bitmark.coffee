@@ -25,8 +25,8 @@ module.exports = (robot) ->
         net += "Target: #{target} - "
         net += "Hashrate: #{hl} #{hm} #{hs} MH/s - "
         net += "Change: #{change} - "
-        net += "Performance: #{performance}% - "
-        net += "Next Diff: ~#{nextdiff} (confidence #{confidence}%)"
+        net += "Performance: #{performance}% - " if change < 660
+        net += "Next Diff: ~#{nextdiff} (confidence #{confidence}%)" if change < 660
         msg.send net
 
   robot.hear /^(supply)$/i, (msg) ->
