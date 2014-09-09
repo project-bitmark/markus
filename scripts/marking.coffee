@@ -52,6 +52,6 @@ module.exports = (robot) ->
     	names = msg.match[1]
     	names = names.replace('@', '').split(/[, ]+/)
     	
-        award_points(msg, name, msg.match[2]) for nm in names
+        award_points(msg, name, msg.match[2])
         save(robot)
        
