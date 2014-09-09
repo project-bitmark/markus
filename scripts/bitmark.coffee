@@ -15,15 +15,18 @@ module.exports = (robot) ->
         hm = Math.round(json.data.hashrate_m/1000000) + " MH/s"
         hs = Math.round(json.data.hashrate_s/1000000) + " MH/s"
         change = (Math.ceil(json.generated/720)*720)-json.generated
-        cte = (json.data.block_s.time+json.data.block_m.time-json.data.block_l.time)/3
-        cte = (json.data.current.time-json.data.block_l.time)/(720-change)
-        cte = (new Date(((cte*Math.max(change,30))+json.data.block_m.time)*1000)).toUTCString();
+        avblocktime = (json.data.current.time-json.data.lastchange.time)/(720-change)
+        performance = Math.floor((avblocktime/120)*10000)/100
+        nextdiff = Math.floor(json.data.current.difficulty*(avblocktime/120))
+        confidence = Math.floor((720/change)*100)
         target = Math.floor(((json.data.current.difficulty*4294967296)/120)/1000000) + " MH/s"
         net = "Block: http://bitmark.co:3000/block/#{json.data.current.hash}|#{json.generated} - "
         net += "Difficulty: #{json.data.current.difficulty} - "
         net += "Target Hashrate: #{target} - "
         net += "Hashrate Averages: #{hl} #{hm} #{hs} - "
-        net += "Change: #{change}"
+        net += "Change: #{change} - "
+        net += "Performance: #{performance}% - "
+        net += "Next Diff: ~#{nextdiff} (confidence #{confidence}%)"
         msg.send net
 
   robot.hear /^(supply)$/i, (msg) ->
