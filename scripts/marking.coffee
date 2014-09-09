@@ -50,6 +50,6 @@ module.exports = (robot) ->
                        
     robot.hear /mark (.*) ([\d.]+)$/i, (msg) ->
     	nms = msg.match[1].replace(/[@:]/g, '').split(/[, ]+/)
-        award_points msg, nm, msg.match[2] for nm in nms
+
         save(robot)
        
