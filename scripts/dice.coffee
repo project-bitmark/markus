@@ -26,6 +26,9 @@ module.exports = (robot) ->
         float = robot.brain.data.float or float
 
     robot.hear /^dice ([\d]+) ([\d.]+)$/i, (msg) ->
+        if msg.message.user.room != "casino"
+          msg.send "please use me in #casino"
+          return
         bet = parseInt(msg.match[1])
         if bet >= 64000
           msg.send "dice must be less than 64000"
