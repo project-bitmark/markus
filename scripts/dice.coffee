@@ -5,14 +5,24 @@
 #   dice <bet> <amount> - bet to roll lower than any number between 100 and 64000, with amount
 #   dice float - get dice float
 
-float = 1000000
 max = 65536
+float = 1000000
+points = {}
 
+add_marks = (username, marks) ->
+    points[username] ?= 0
+    points[username] += marks
+    
+del_marks = (username, marks) ->
+    points[username] -= marks
+    
 save = (robot) ->
+    robot.brain.data.point = points
     robot.brain.data.float = float
 
 module.exports = (robot) ->
     robot.brain.on 'loaded', ->
+        points = robot.brain.data.points or points
         float = robot.brain.data.float or float
 
     robot.hear /^dice ([\d]+) ([\d.]+)$/i, (msg) ->
@@ -30,7 +40,11 @@ module.exports = (robot) ->
         if amount > 500
           msg.send "bet must be lower than 500₥"
           return
+        if amount > points[msg.message.user.name]
+          msg.send "you tried to bet #{amount}₥ but only have #{points[msg.message.user.name]}₥"
+          return
         dice = Math.floor(Math.random() * max) + 1
+        del_marks(msg.message.user.name, amount)
         if bet < dice
           float += amount
           msg.send "Sorry, dice was #{dice} and you bet lower than #{bet}"
@@ -38,10 +52,10 @@ module.exports = (robot) ->
         odds = (bet/max).toFixed(4)
         mul = ((max/bet)*0.981).toFixed(4)
         win = amount*mul
-        float -= win
+        del_marks(msg.message.user.name, win)
+        dice.float -= win
         msg.send "Congratulations #{msg.message.user.name}! dice: #{dice}, bet: #{bet}, odds: #{odds}, multiplier: #{mul}, *win*: #{win}₥"
-        msg.send JSON.stringify(msg.message)
         save(robot)
         
     robot.hear /^dice float$/i, (msg) ->
-        msg.send "Dice float is: #{float}₥"
+        msg.send "Dice float is: #{dice.float}₥"
