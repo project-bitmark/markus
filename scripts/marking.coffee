@@ -33,6 +33,11 @@ module.exports = (robot) ->
     robot.hear /@?([\w\S]+)(\+\+)$/i, (msg) ->
         award_points(msg, msg.match[1], 1)
         save(robot)
+        
+    robot.hear /(\+\?)$/i, (msg) ->
+        username = msg.message.user.name
+        points[msg.message.user.name] ?= 0
+        msg.send msg.message.user.name + ' has ' + points[msg.message.user.name] + '₥'
  
     robot.hear /@?([\w\S]+): (\+\+)$/i, (msg) ->
         award_points(msg, msg.match[1], 1)
