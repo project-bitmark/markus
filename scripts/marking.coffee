@@ -33,7 +33,12 @@ module.exports = (robot) ->
     robot.hear /@?([\w\S]+)(\+\+)$/i, (msg) ->
         award_points(msg, msg.match[1], 1)
         save(robot)
-        
+ 
+     robot.hear /resetme$/i, (msg) ->
+        username = msg.message.user.name
+        points[msg.message.user.name] = 1000
+        msg.send msg.message.user.name + ' reset to ' + points[msg.message.user.name] + '₥'
+               
     robot.hear /(\+\?)$/i, (msg) ->
         username = msg.message.user.name
         points[msg.message.user.name] ?= 0
