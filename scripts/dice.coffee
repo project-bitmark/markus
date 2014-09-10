@@ -52,7 +52,7 @@ module.exports = (robot) ->
           return
         odds = (bet/max).toFixed(4)
         mul = ((max/bet)*0.981).toFixed(4)
-        win = amount*mul
+        win = (amount*mul).toFixed(8)
         add_marks(msg.message.user.name, win)
         house -= win
         msg.send "Congratulations #{msg.message.user.name}! dice: #{dice}, bet: #{bet}, odds: #{odds}, multiplier: #{mul}, *win*: #{win}₥"
