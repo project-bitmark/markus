@@ -11,10 +11,10 @@ points = {}
 
 add_marks = (username, marks) ->
     points[username] ?= 0
-    points[username] = (parseFloat(points[username]) + parseFloat(marks)).toFixed(4)
+    points[username] = (parseFloat(points[username]) + parseFloat(marks)).toFixed(5)
     
 del_marks = (username, marks) ->
-    points[username] = (parseFloat(points[username]) - parseFloat(marks)).toFixed(4)
+    points[username] = (parseFloat(points[username]) - parseFloat(marks)).toFixed(5)
     
 save = (robot) ->
     robot.brain.data.points = points
@@ -55,7 +55,7 @@ module.exports = (robot) ->
           return
         odds = (bet/max).toFixed(4)
         mul = ((max/bet)*0.981).toFixed(4)
-        win = (amount*mul).toFixed(4)
+        win = (amount*mul).toFixed(5)
         add_marks(msg.message.user.name, win)
         house -= win
         msg.send "Congratulations #{msg.message.user.name}! dice: #{dice}, amount: #{amount}, bet: #{bet}, odds: #{odds}, multiplier: #{mul}, *win*: #{win}₥"
