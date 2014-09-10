@@ -37,7 +37,7 @@ module.exports = (robot) ->
           return
         odds = (bet/max).toFixed(4)
         mul = ((max/bet)*0.981).toFixed(4)
-        win = bet*mul
+        win = amount*mul
         float -= win
         msg.send "Congratulations! dice: #{dice}, bet: #{bet}, odds: #{odds}, multiplier: #{mul}, *win*: #{win}₥"
         save(robot)
