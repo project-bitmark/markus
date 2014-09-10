@@ -30,7 +30,7 @@ module.exports = (robot) ->
           msg.send "bet must be lower than 500₥"
           return
         dice = Math.floor(Math.random() * max) + 1
-        if bet > dice
+        if bet < dice
           msg.send "Sorry, dice was #{dice} and you bet lower than #{bet}"
           return
         odds = (bet/max).toFixed(4)
