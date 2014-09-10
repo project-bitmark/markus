@@ -5,6 +5,7 @@
 #   network|net - show network details
 #   supply - show currency supply details
 #   poloniex|polo - show poloniex exchange details
+#   address <address> - get btm address info
 
 module.exports = (robot) ->
   robot.hear /^(network|net)$/i, (msg) ->
@@ -29,15 +30,15 @@ module.exports = (robot) ->
         net += "Next Diff: ~#{nextdiff} (confidence #{confidence}%)" if change < 660
         msg.send net
         
-  robot.hear /^(btm|bitmark) ([\w\S]+)$/i, (msg) ->
-    robot.http("http://bitmark.co:3000/api/addr/#{msg.match[2]}")
+  robot.hear /^(address) b([\w\S]+)$/i, (msg) ->
+    robot.http("http://bitmark.co:3000/api/addr/b#{msg.match[2]}")
       .get() (err, res, body) ->
         json = JSON.parse(body)
         bal = "Balance: #{json.balance}, "
         bal += "unconfirmed: #{json.unconfirmedBalance}, "
         bal += "in: #{json.totalReceived}, "
         bal += "out: #{json.totalReceived}, "
-        bal += "http://bitmark.co:3000/address/#{json.addrStr}|explorer
+        bal += "http://bitmark.co:3000/address/#{json.addrStr}|explorer"
         msg.send bal
 
   robot.hear /^(supply)$/i, (msg) ->
