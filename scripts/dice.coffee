@@ -11,10 +11,10 @@ points = {}
 
 add_marks = (username, marks) ->
     points[username] ?= 0
-    points[username] += marks
+    points[username] = parseFloat(points[username]) + parseFloat(marks)
     
 del_marks = (username, marks) ->
-    points[username] -= marks
+    points[username] = parseFloat(points[username]) - parseFloat(marks)
     
 save = (robot) ->
     robot.brain.data.points = points
