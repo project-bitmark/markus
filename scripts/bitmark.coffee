@@ -28,6 +28,17 @@ module.exports = (robot) ->
         net += "Performance: #{performance}% - " if change < 660
         net += "Next Diff: ~#{nextdiff} (confidence #{confidence}%)" if change < 660
         msg.send net
+        
+  robot.hear /^(btm|bitmark) ([\w\S]+)$/i, (msg) ->
+    robot.http("http://bitmark.co:3000/api/addr/#{msg.match[2]}")
+      .get() (err, res, body) ->
+        json = JSON.parse(body)
+        bal = "Balance: #{json.balance}, "
+        bal += "unconfirmed: #{json.unconfirmedBalance}, "
+        bal += "in: #{json.totalReceived}, "
+        bal += "out: #{json.totalReceived}, "
+        bal += "http://bitmark.co:3000/address/#{json.addrStr}|explorer
+        msg.send bal
 
   robot.hear /^(supply)$/i, (msg) ->
     robot.http("http://bitmark.co/statistics/data/livesummary.json")
