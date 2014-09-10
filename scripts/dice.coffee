@@ -6,7 +6,7 @@
 #   dice float - get dice float
 
 max = 65536
-float = 1000000
+house = 1000000
 points = {}
 
 add_marks = (username, marks) ->
@@ -17,8 +17,8 @@ del_marks = (username, marks) ->
     points[username] -= marks
     
 save = (robot) ->
-    robot.brain.data.point = points
-    robot.brain.data.float = float
+    robot.brain.data.points = points
+    robot.brain.data.house = house
 
 module.exports = (robot) ->
     robot.brain.on 'loaded', ->
@@ -46,16 +46,17 @@ module.exports = (robot) ->
         dice = Math.floor(Math.random() * max) + 1
         del_marks(msg.message.user.name, amount)
         if bet < dice
-          float += amount
+          house += amount
+          save(robot)
           msg.send "Sorry, dice was #{dice} and you bet lower than #{bet}"
           return
         odds = (bet/max).toFixed(4)
         mul = ((max/bet)*0.981).toFixed(4)
         win = amount*mul
-        del_marks(msg.message.user.name, win)
-        dice.float -= win
+        add_marks(msg.message.user.name, win)
+        house -= win
         msg.send "Congratulations #{msg.message.user.name}! dice: #{dice}, bet: #{bet}, odds: #{odds}, multiplier: #{mul}, *win*: #{win}₥"
         save(robot)
         
     robot.hear /^dice float$/i, (msg) ->
-        msg.send "Dice float is: #{dice.float}₥"
+        msg.send "Dice float is: #{house}₥"
