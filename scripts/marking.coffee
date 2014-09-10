@@ -20,7 +20,7 @@ points = {}
 
 award_points = (msg, username, pts) ->
     points[username] ?= 0
-    points[username] += parseFloat(pts).toFixed(5)
+    points[username] = (parseFloat(points[username]) + parseFloat(pts)).toFixed(5)
     msg.send pts + '₥ to ' + username
 
 save = (robot) ->
