@@ -39,7 +39,8 @@ module.exports = (robot) ->
         mul = ((max/bet)*0.981).toFixed(4)
         win = amount*mul
         float -= win
-        msg.send "Congratulations {#msg.message.user.name}! dice: #{dice}, bet: #{bet}, odds: #{odds}, multiplier: #{mul}, *win*: #{win}₥"
+        msg.send "Congratulations #{msg.message.user.name}! dice: #{dice}, bet: #{bet}, odds: #{odds}, multiplier: #{mul}, *win*: #{win}₥"
+        msg.send JSON.stringify(msg.message)
         save(robot)
         
     robot.hear /^dice float$/i, (msg) ->
