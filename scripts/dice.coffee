@@ -40,8 +40,8 @@ module.exports = (robot) ->
         if amount < 1
           msg.send "bet must be higher than 1₥"
           return
-        if amount > 500
-          msg.send "bet must be lower than 500₥"
+        if amount > 500000
+          msg.send "bet must be lower than 500,000₥"
           return
         if amount > points[msg.message.user.name]
           msg.send "you tried to bet #{amount}₥ but only have #{points[msg.message.user.name]}₥"
