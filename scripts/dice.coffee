@@ -14,7 +14,7 @@ module.exports = (robot) ->
     robot.brain.on 'loaded', ->
         float = robot.brain.data.float or float
 
-    robot.hear /^dice ([\d]+)([\d.]+)$/i, (msg) ->
+    robot.hear /^dice ([\d]+) ([\d.]+)$/i, (msg) ->
         bet = parseInt(msg.match[1])
         if bet >= 64000
           msg.send "dice must be less than 64000"
