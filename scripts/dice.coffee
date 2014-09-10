@@ -18,12 +18,12 @@ del_marks = (username, marks) ->
     
 save = (robot) ->
     robot.brain.data.points = points
-    robot.brain.data.house = house
+    robot.brain.data.nhouse = house
 
 module.exports = (robot) ->
     robot.brain.on 'loaded', ->
         points = robot.brain.data.points or points
-        house = robot.brain.data.house or house
+        house = robot.brain.data.nhouse or house
 
     robot.hear /^dice ([\d]+) ([\d.]+)$/i, (msg) ->
         if msg.message.user.room != "casino"
@@ -48,8 +48,8 @@ module.exports = (robot) ->
           return
         dice = Math.floor(Math.random() * max) + 1
         del_marks(msg.message.user.name, amount)
+        house += amount
         if bet < dice
-          house += amount
           save(robot)
           msg.send "Sorry, dice was #{dice} and you bet lower than #{bet}"
           return
