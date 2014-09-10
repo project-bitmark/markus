@@ -23,7 +23,7 @@ save = (robot) ->
 module.exports = (robot) ->
     robot.brain.on 'loaded', ->
         points = robot.brain.data.points or points
-        float = robot.brain.data.float or float
+        house = robot.brain.data.house or house
 
     robot.hear /^dice ([\d]+) ([\d.]+)$/i, (msg) ->
         if msg.message.user.room != "casino"
