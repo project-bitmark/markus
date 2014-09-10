@@ -37,7 +37,7 @@ module.exports = (robot) ->
         bal = "Balance: #{json.balance}, "
         bal += "unconfirmed: #{json.unconfirmedBalance}, "
         bal += "in: #{json.totalReceived}, "
-        bal += "out: #{json.totalReceived}, "
+        bal += "out: #{json.totalSent}, "
         bal += "http://bitmark.co:3000/address/#{json.addrStr}|explorer"
         msg.send bal
 
