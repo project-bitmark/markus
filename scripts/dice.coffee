@@ -3,6 +3,7 @@
 #
 # Commands:
 #   dice <bet> <amount> - bet to roll lower than any number between 100 and 64000, with amount
+#   dice float - get dice float
 
 float = 1000000
 max = 65536
@@ -31,10 +32,15 @@ module.exports = (robot) ->
           return
         dice = Math.floor(Math.random() * max) + 1
         if bet < dice
+          float += amount
           msg.send "Sorry, dice was #{dice} and you bet lower than #{bet}"
           return
         odds = (bet/max).toFixed(4)
         mul = ((max/bet)*0.981).toFixed(4)
         win = bet*mul
+        float -= win
         msg.send "Congratulations! dice: #{dice}, bet: #{bet}, odds: #{odds}, multiplier: #{mul}, *win*: #{win}₥"
         save(robot)
+        
+    robot.hear /^dice float$/i, (msg) ->
+        msg.send "Dice float is: #{float}₥"
