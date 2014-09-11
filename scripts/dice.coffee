@@ -38,10 +38,18 @@ module.exports = (robot) ->
           return
         amount = parseFloat(msg.match[2])
         if amount < 1
-          msg.send "bet must be higher than 1₥"
+          msg.send "amount must be higher than 1₥"
           return
         if amount > 500000
-          msg.send "bet must be lower than 500,000₥"
+          msg.send "amount must be lower than 500,000₥"
+          return
+        odds = (bet/max).toFixed(4)
+        mul = ((max/bet)*0.981).toFixed(4)
+        win = (amount*mul).toFixed(5)
+        maxwin = (house/4).toFixed(5)
+        maxamount = maxwin/mul
+        if win > maxwin
+          msg.send "amount must be lower than #{maxamount}₥"
           return
         if amount > points[msg.message.user.name]
           msg.send "you tried to bet #{amount}₥ but only have #{points[msg.message.user.name]}₥"
@@ -53,9 +61,6 @@ module.exports = (robot) ->
           save(robot)
           msg.send "Sorry, dice was #{dice} and you bet lower than #{bet}"
           return
-        odds = (bet/max).toFixed(4)
-        mul = ((max/bet)*0.981).toFixed(4)
-        win = (amount*mul).toFixed(5)
         add_marks(msg.message.user.name, win)
         house -= win
         msg.send "Congratulations #{msg.message.user.name}! dice: #{dice}, amount: #{amount}, bet: #{bet}, odds: #{odds}, multiplier: #{mul}, *win*: #{win}₥"
