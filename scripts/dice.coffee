@@ -48,7 +48,7 @@ module.exports = (robot) ->
         win = (amount*mul).toFixed(5)
         maxwin = (house/4).toFixed(5)
         maxamount = maxwin/mul
-        if win > maxwin
+        if amount > maxamount
           msg.send "amount must be lower than #{maxamount}₥ and you specified #{amount}₥"
           return
         if amount > points[msg.message.user.name]
@@ -59,7 +59,7 @@ module.exports = (robot) ->
         house += amount
         if bet < dice
           save(robot)
-          msg.send "Sorry, dice was #{dice} and you bet lower than #{bet}"
+          msg.send "Sorry, dice: #{dice}, amount: #{amount}, bet: #{bet}, odds: #{odds}, multiplier: #{mul}, *lost*"
           return
         add_marks(msg.message.user.name, win)
         house -= win
