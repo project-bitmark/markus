@@ -33,15 +33,15 @@ module.exports = (robot) ->
         if bet >= 64000
           msg.send "#{msg.message.user.name}: dice must be less than 64000"
           return
-        if bet < 100
+        if bet <= 100
           msg.send "#{msg.message.user.name}: dice must be higher than 100"
           return
         amount = parseFloat(msg.match[2])
         if amount < 1
-          msg.send "#{msg.message.user.name}: amount must be higher than 1₥"
+          msg.send "#{msg.message.user.name}: amount must be 1₥ or higher than "
           return
         if amount > 500000
-          msg.send "#{msg.message.user.name}: amount must be lower than 500,000₥"
+          msg.send "#{msg.message.user.name}: amount must be 500,000₥ or lower"
           return
         odds = (bet/max).toFixed(4)
         mul = ((max/bet)*0.981).toFixed(4)
@@ -49,7 +49,7 @@ module.exports = (robot) ->
         maxwin = (house/4).toFixed(5)
         maxamount = maxwin/mul
         if amount > maxamount
-          msg.send "#{msg.message.user.name}: amount must be lower than #{maxamount}₥"
+          msg.send "#{msg.message.user.name}: maximum for this bet is #{maxamount}₥"
           return
         if amount > points[msg.message.user.name]
           msg.send "#{msg.message.user.name}: you tried to bet #{amount}₥ but only have #{points[msg.message.user.name]}₥"
@@ -74,7 +74,7 @@ module.exports = (robot) ->
         if bet >= 64000
           msg.send "#{msg.message.user.name}: dice must be less than 64000"
           return
-        if bet < 100
+        if bet <= 100
           msg.send "#{msg.message.user.name}: dice must be higher than 100"
           return
         odds = (bet/max).toFixed(4)
@@ -83,7 +83,7 @@ module.exports = (robot) ->
         maxamount = maxwin/mul
         amount = Math.min( points[msg.message.user.name], 500000, maxamount )
         if amount < 1
-          msg.send "#{msg.message.user.name}: amount must be higher than 1₥"
+          msg.send "#{msg.message.user.name}: amount must be 1₥ or higher"
           return
         win = (amount*mul).toFixed(5)
         dice = Math.floor(Math.random() * max) + 1
