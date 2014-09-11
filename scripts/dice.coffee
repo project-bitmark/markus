@@ -27,21 +27,21 @@ module.exports = (robot) ->
 
     robot.hear /^dice ([\d]+) ([\d.]+)$/i, (msg) ->
         if msg.message.user.room != "casino"
-          msg.send "please use me in #casino"
+          msg.send "#{msg.message.user.name}: please use me in #casino"
           return
         bet = parseInt(msg.match[1])
         if bet >= 64000
-          msg.send "dice must be less than 64000"
+          msg.send "#{msg.message.user.name}: dice must be less than 64000"
           return
         if bet < 100
-          msg.send "dice must be higher than 100"
+          msg.send "#{msg.message.user.name}: dice must be higher than 100"
           return
         amount = parseFloat(msg.match[2])
         if amount < 1
-          msg.send "amount must be higher than 1₥"
+          msg.send "#{msg.message.user.name}: amount must be higher than 1₥"
           return
         if amount > 500000
-          msg.send "amount must be lower than 500,000₥"
+          msg.send "#{msg.message.user.name}: amount must be lower than 500,000₥"
           return
         odds = (bet/max).toFixed(4)
         mul = ((max/bet)*0.981).toFixed(4)
@@ -49,17 +49,17 @@ module.exports = (robot) ->
         maxwin = (house/4).toFixed(5)
         maxamount = maxwin/mul
         if amount > maxamount
-          msg.send "amount must be lower than #{maxamount}₥ and you specified #{amount}₥"
+          msg.send "#{msg.message.user.name}: amount must be lower than #{maxamount}₥"
           return
         if amount > points[msg.message.user.name]
-          msg.send "you tried to bet #{amount}₥ but only have #{points[msg.message.user.name]}₥"
+          msg.send "#{msg.message.user.name}: you tried to bet #{amount}₥ but only have #{points[msg.message.user.name]}₥"
           return
         dice = Math.floor(Math.random() * max) + 1
         del_marks(msg.message.user.name, amount)
         house += amount
         if bet < dice
           save(robot)
-          msg.send "Sorry, dice: #{dice}, amount: #{amount}, bet: #{bet}, odds: #{odds}, multiplier: #{mul}, *lost*"
+          msg.send "Sorry #{msg.message.user.name}, dice: #{dice}, amount: #{amount}, bet: #{bet}, odds: #{odds}, multiplier: #{mul}, *lost*"
           return
         add_marks(msg.message.user.name, win)
         house -= win
@@ -68,14 +68,14 @@ module.exports = (robot) ->
 
     robot.hear /^dice ([\d]+) max$/i, (msg) ->
         if msg.message.user.room != "casino"
-          msg.send "please use me in #casino"
+          msg.send "#{msg.message.user.name}: please use me in #casino"
           return
         bet = parseInt(msg.match[1])
         if bet >= 64000
-          msg.send "dice must be less than 64000"
+          msg.send "#{msg.message.user.name}: dice must be less than 64000"
           return
         if bet < 100
-          msg.send "dice must be higher than 100"
+          msg.send "#{msg.message.user.name}: dice must be higher than 100"
           return
         odds = (bet/max).toFixed(4)
         mul = ((max/bet)*0.981).toFixed(4)
@@ -83,7 +83,7 @@ module.exports = (robot) ->
         maxamount = maxwin/mul
         amount = Math.min( points[msg.message.user.name], 500000, maxamount )
         if amount < 1
-          msg.send "amount must be higher than 1₥"
+          msg.send "#{msg.message.user.name}: amount must be higher than 1₥"
           return
         win = (amount*mul).toFixed(5)
         dice = Math.floor(Math.random() * max) + 1
@@ -91,7 +91,7 @@ module.exports = (robot) ->
         house += amount
         if bet < dice
           save(robot)
-          msg.send "Sorry, dice: #{dice}, amount: #{amount}, bet: #{bet}, odds: #{odds}, multiplier: #{mul}, *lost*"
+          msg.send "Sorry #{msg.message.user.name}, dice: #{dice}, amount: #{amount}, bet: #{bet}, odds: #{odds}, multiplier: #{mul}, *lost*"
           return
         add_marks(msg.message.user.name, win)
         house -= win
