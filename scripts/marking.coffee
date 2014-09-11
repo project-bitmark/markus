@@ -31,34 +31,48 @@ module.exports = (robot) ->
         points = robot.brain.data.points or {}
 
     robot.hear /^@?([\w\S]+)(\+\+)$/i, (msg) ->
+        if msg.message.user.room != "casino"
+          return
         award_points(msg, msg.match[1], 1)
         save(robot)
  
      robot.hear /^resetme$/i, (msg) ->
+        if msg.message.user.room != "casino"
+          return
         username = msg.message.user.name
         points[msg.message.user.name] = 1000
         msg.send msg.message.user.name + ' reset to ' + points[msg.message.user.name] + '₥'
                
     robot.hear /^(\+\?)$/i, (msg) ->
+        if msg.message.user.room != "casino"
+          return
         username = msg.message.user.name
         points[msg.message.user.name] ?= 0
         msg.send msg.message.user.name + ' has ' + points[msg.message.user.name] + '₥'
  
     robot.hear /^@?([\w\S]+): (\+\+)$/i, (msg) ->
+        if msg.message.user.room != "casino"
+          return
         award_points(msg, msg.match[1], 1)
         save(robot)
         
     robot.hear /^@?([\w\S]+)(\+\?)$/i, (msg) ->
+        if msg.message.user.room != "casino"
+          return
         username = msg.match[1]
         points[username] ?= 0
         msg.send username + ' has ' + points[username] + '₥'
  
      robot.hear /^@?([\w\S]+): (\+\?)$/i, (msg) ->
+        if msg.message.user.room != "casino"
+          return
         username = msg.match[1]
         points[username] ?= 0
         msg.send username + ' has ' + points[username] + '₥'
                        
     robot.hear /^mark (.*) ([\d.]+)$/i, (msg) ->
+        if msg.message.user.room != "casino"
+          return
         nms = msg.match[1].replace(/[@:]/g, '').split(/[, ]+/)
         award_points msg, nm, msg.match[2] for nm in nms
         save(robot)
