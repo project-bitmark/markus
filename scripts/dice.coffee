@@ -91,7 +91,7 @@ module.exports = (robot) ->
         house += amount
         if bet < dice
           save(robot)
-          msg.send "Sorry, dice was #{dice} and you bet lower than #{bet}"
+          msg.send "Sorry, dice: #{dice}, amount: #{amount}, bet: #{bet}, odds: #{odds}, multiplier: #{mul}, *lost*"
           return
         add_marks(msg.message.user.name, win)
         house -= win
