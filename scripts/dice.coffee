@@ -65,6 +65,38 @@ module.exports = (robot) ->
         house -= win
         msg.send "Congratulations #{msg.message.user.name}! dice: #{dice}, amount: #{amount}, bet: #{bet}, odds: #{odds}, multiplier: #{mul}, *win*: #{win}₥"
         save(robot)
-        
+
+    robot.hear /^dice ([\d]+) max$/i, (msg) ->
+        if msg.message.user.room != "casino"
+          msg.send "please use me in #casino"
+          return
+        bet = parseInt(msg.match[1])
+        if bet >= 64000
+          msg.send "dice must be less than 64000"
+          return
+        if bet < 100
+          msg.send "dice must be higher than 100"
+          return
+        odds = (bet/max).toFixed(4)
+        mul = ((max/bet)*0.981).toFixed(4)
+        maxwin = (house/4).toFixed(5)
+        maxamount = maxwin/mul
+        amount = Math.min( points[msg.message.user.name], 500000, maxamount )
+        if amount < 1
+          msg.send "amount must be higher than 1₥"
+          return
+        win = (amount*mul).toFixed(5)
+        dice = Math.floor(Math.random() * max) + 1
+        del_marks(msg.message.user.name, amount)
+        house += amount
+        if bet < dice
+          save(robot)
+          msg.send "Sorry, dice was #{dice} and you bet lower than #{bet}"
+          return
+        add_marks(msg.message.user.name, win)
+        house -= win
+        msg.send "Congratulations #{msg.message.user.name}! dice: #{dice}, amount: #{amount}, bet: #{bet}, odds: #{odds}, multiplier: #{mul}, *win*: #{win}₥"
+        save(robot)
+                
     robot.hear /^dice float$/i, (msg) ->
         msg.send "Dice float is: #{house}₥"
