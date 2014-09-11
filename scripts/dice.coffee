@@ -49,7 +49,7 @@ module.exports = (robot) ->
         maxwin = (house/4).toFixed(5)
         maxamount = maxwin/mul
         if win > maxwin
-          msg.send "amount must be lower than #{maxamount}₥"
+          msg.send "amount must be lower than #{maxamount}₥ and you specified #{amount}₥"
           return
         if amount > points[msg.message.user.name]
           msg.send "you tried to bet #{amount}₥ but only have #{points[msg.message.user.name]}₥"
