@@ -18,7 +18,12 @@ module.exports = (robot) ->
         change = (Math.ceil(json.generated/720)*720)-json.generated
         avblocktime = (json.data.current.time-json.data.lastchange.time)/(720-change)
         performance = Math.floor((120/avblocktime)*10000)/100
-        nextdiff = Math.floor(json.data.current.difficulty*(120/avblocktime))
+        nextdiff = json.data.current.difficulty*(120/avblocktime)
+        if nextdiff < json.data.current.difficulty
+          nextdiff = Math.min(json.data.current.difficulty/4, nextdiff)
+        if nextdiff > json.data.current.difficulty
+          nextdiff = Math.min(json.data.current.difficulty*4, nextdiff)
+        nextdiff = Math.floor(nextdiff)
         confidence = Math.floor(((720-change)/720)*100)
         target = Math.floor(((json.data.current.difficulty*4294967296)/120)/1000000) + " MH/s"
         net = "Block: http://bitmark.co:3000/block/#{json.data.current.hash}|#{json.generated} - "
