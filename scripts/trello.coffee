@@ -30,7 +30,7 @@ module.exports = (robot) ->
       return
     createCard msg, list, cardName
     
-  robot.respond /^(show|list|cards) (new|main|side|release|marking|markus)/i, (msg) ->
+  robot.hear /^(show|list|cards) (new|main|side|release|marking|markus)/i, (msg) ->
     list = msg.match[2]
     showCards msg, list
 
