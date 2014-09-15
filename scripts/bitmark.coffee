@@ -20,7 +20,7 @@ module.exports = (robot) ->
         performance = Math.floor((120/avblocktime)*10000)/100
         nextdiff = json.data.current.difficulty*(120/avblocktime)
         if nextdiff < json.data.current.difficulty
-          nextdiff = Math.min(json.data.current.difficulty/4, nextdiff)
+          nextdiff = Math.max(json.data.current.difficulty/4, nextdiff)
         if nextdiff > json.data.current.difficulty
           nextdiff = Math.min(json.data.current.difficulty*4, nextdiff)
         nextdiff = Math.floor(nextdiff)
