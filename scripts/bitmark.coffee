@@ -66,7 +66,7 @@ module.exports = (robot) ->
         msg.send price
 
 checkAddress = (msg, address) ->
-  robot.http("http://bitmark.co:3000/api/addr/#{address}")
+  msg.http("http://bitmark.co:3000/api/addr/#{address}")
     .get() (err, res, body) ->
       json = JSON.parse(body)
       bal = "Balance: #{json.balance}, "
