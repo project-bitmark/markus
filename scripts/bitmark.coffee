@@ -36,10 +36,10 @@ module.exports = (robot) ->
         msg.send net
         
   robot.hear /^(address) b([\w\S]+)$/i, (msg) ->
-    checkAddress msg "b#{msg.match[2]}"
+    checkAddress msg, "b#{msg.match[2]}"
 
   robot.hear /^(address) foundation$/i, (msg) ->
-    checkAddress msg "bQmnzVS5M4bBdZqBTuHrjnzxHS6oSUz6cG"
+    checkAddress msg, "bQmnzVS5M4bBdZqBTuHrjnzxHS6oSUz6cG"
   
   robot.hear /^(supply)$/i, (msg) ->
     robot.http("http://bitmark.co/statistics/data/livesummary.json")
