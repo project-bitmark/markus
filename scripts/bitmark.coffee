@@ -30,7 +30,6 @@ module.exports = (robot) ->
           confidence = 100
         else
           confidence = Math.floor(((720-change)/720)*100)
-        if 
         target = Math.floor(((json.data.current.difficulty*4294967296)/120)/1000000) + " MH/s"
         net = "Block: http://bitmark.co:3000/block/#{json.data.current.hash}|#{json.generated} - "
         net += "Diff: #{json.data.current.difficulty} - "
@@ -82,3 +81,4 @@ checkAddress = (msg, address) ->
       bal += "out: #{json.totalSent}, "
       bal += "http://bitmark.co:3000/address/#{json.addrStr}|explorer"
       msg.send bal
+      
