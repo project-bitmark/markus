@@ -1,5 +1,3 @@
 [
-"redis-brain.coffee",
-"shipit.coffee",
-"bitcoin.coffee"
+"redis-brain.coffee"
 ]
