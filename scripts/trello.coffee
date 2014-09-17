@@ -23,7 +23,7 @@
 
 module.exports = (robot) ->
   robot.hear /^card new (.*)/i, (msg) ->
-    list = new
+    list = "new"
     cardName = msg.match[1]
     if not cardName.length
       msg.send "You must give the card a name"
