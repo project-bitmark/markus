@@ -30,12 +30,13 @@ module.exports = (robot) ->
           confidence = 100
         else
           confidence = Math.floor(((720-change)/720)*100)
+        timetoretarget = Math.ceil(performance/100*change*2)
         target = Math.floor(((json.data.current.difficulty*4294967296)/120)/1000000) + " MH/s"
         net = "Block: http://bitmark.co:3000/block/#{json.data.current.hash}|#{json.generated} - "
         net += "Diff: #{json.data.current.difficulty} - "
         net += "Target: #{target} - "
         net += "Hashrate: #{hl} #{hm} #{hs} MH/s - "
-        net += "Change: #{change} - "
+        net += "Change: #{change} (Approx #{timetoretarget} min) - "
         net += "Performance: #{performance}% - " if change < 660
         net += "Next Diff: ~#{nextdiff} (confidence #{confidence}%)" if change < 660
         msg.send net
