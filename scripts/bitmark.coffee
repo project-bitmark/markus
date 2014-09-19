@@ -4,7 +4,7 @@
 # Commands:
 #   network|net - show network details
 #   supply - show currency supply details
-#   market - show exchange details
+#   market(s) - show exchange details
 #   address <address> - get btm address info
 
 module.exports = (robot) ->
@@ -31,6 +31,7 @@ module.exports = (robot) ->
         else
           confidence = Math.floor(((720-change)/720)*100)
         timetoretarget = Math.ceil(performance/100*change*2)
+        timetoretarget = (timetoretarget/24).toFixed(2) if change > 119
         target = Math.floor(((json.data.current.difficulty*4294967296)/120)/1000000) + " MH/s"
         net = "Block: http://bitmark.co:3000/block/#{json.data.current.hash}|#{json.generated} - "
         net += "Diff: #{json.data.current.difficulty} - "
@@ -59,7 +60,7 @@ module.exports = (robot) ->
         net += "there is #{diff} less BTM in the world"
         msg.send net
         
-  robot.hear /^(market|polo)$/i, (msg) ->
+  robot.hear /^(market|markets|polo)$/i, (msg) ->
     robot.http("https://poloniex.com/public?command=returnTicker")
       .get() (err, res, body) ->
         json = JSON.parse(body)
