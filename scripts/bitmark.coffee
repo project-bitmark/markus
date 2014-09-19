@@ -31,7 +31,7 @@ module.exports = (robot) ->
         else
           confidence = Math.floor(((720-change)/720)*100)
         mintotarget = Math.ceil(performance/100*change*2)
-        hourtoretarget = (mintotarget/24).toFixed(2)
+        hourtoretarget = (mintotarget/60).toFixed(2)
         timetoretarget =  "" + hourtoretarget + " hrs"
         timetoretarget =  "" + mintotarget + " mins" if change < 120
         target = Math.floor(((json.data.current.difficulty*4294967296)/120)/1000000) + " MH/s"
