@@ -4,7 +4,7 @@
 # Commands:
 #   network|net - show network details
 #   supply - show currency supply details
-#   poloniex|polo - show poloniex exchange details
+#   market - show exchange details
 #   address <address> - get btm address info
 
 module.exports = (robot) ->
