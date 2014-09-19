@@ -67,7 +67,6 @@ module.exports = (robot) ->
       .get() (err, res, body) ->
         json = JSON.parse(body)
         btm = json.result[0]
-        pc = Math.round(btm.percentChange * 100, 2)
         price += "*BITT*: Last: #{btm.Last} - "
         price += "Volume: #{btm.BaseVolume} BTC / #{btm.Volume} BTM - "
         vwa = (btm.BaseVolume/btm.Volume).toFixed(8)
