@@ -39,7 +39,7 @@ module.exports = (robot) ->
         net += "Diff: #{json.data.current.difficulty} - "
         net += "Target: #{target} - "
         net += "Hashrate: #{hl} #{hm} #{hs} MH/s - "
-        net += "Change: #{change} (Approx #{timetoretarget} min) - "
+        net += "Change: #{change} (Approx #{timetoretarget}) - "
         net += "Performance: #{performance}% - " if change < 660
         net += "Next Diff: ~#{nextdiff} (confidence #{confidence}%)" if change < 660
         msg.send net
