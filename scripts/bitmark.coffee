@@ -16,7 +16,8 @@ module.exports = (robot) ->
         hm = Math.round(json.data.hashrate_m/1000000) + ""
         hs = Math.round(json.data.hashrate_s/1000000) + ""
         change = (Math.ceil(json.generated/720)*720)-json.generated
-        avblocktime = (json.data.current.time-json.data.lastchange.time)/(720-change)
+        timesincelastretarget = json.data.current.time-json.data.lastchange.time
+        avblocktime = (timesincelastretarget)/(720-change)
         performance = Math.floor((120/avblocktime)*10000)/100
         nextdiff = json.data.current.difficulty*(120/avblocktime)
         if nextdiff < json.data.current.difficulty
@@ -24,7 +25,11 @@ module.exports = (robot) ->
         if nextdiff > json.data.current.difficulty
           nextdiff = Math.min(json.data.current.difficulty*4, nextdiff)
         nextdiff = Math.floor(nextdiff)
-        confidence = Math.floor(((720-change)/720)*100)
+        maxretargettime = 345600 # 4 days
+        if (timesincelastretarget) >= 345600
+          confidence = 100
+        else
+          confidence = Math.floor(((720-change)/720)*100)
         target = Math.floor(((json.data.current.difficulty*4294967296)/120)/1000000) + " MH/s"
         net = "Block: http://bitmark.co:3000/block/#{json.data.current.hash}|#{json.generated} - "
         net += "Diff: #{json.data.current.difficulty} - "
@@ -84,3 +89,4 @@ checkAddress = (msg, address) ->
       bal += "out: #{json.totalSent}, "
       bal += "http://bitmark.co:3000/address/#{json.addrStr}|explorer"
       msg.send bal
+      
