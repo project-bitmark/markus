@@ -58,7 +58,7 @@ module.exports = (robot) ->
         net += "there is #{diff} less BTM in the world"
         msg.send net
         
-  robot.hear /^(poloniex|polo)$/i, (msg) ->
+  robot.hear /^(market|polo)$/i, (msg) ->
     robot.http("https://poloniex.com/public?command=returnTicker")
       .get() (err, res, body) ->
         json = JSON.parse(body)
