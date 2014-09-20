@@ -30,7 +30,7 @@ module.exports = (robot) ->
           confidence = 100
         else
           confidence = Math.floor(((720-change)/720)*100)
-        mintotarget = Math.ceil(performance/100*change*2)
+        mintotarget = Math.ceil(change*2/(performance/100))
         hourtoretarget = (mintotarget/60).toFixed(2)
         timetoretarget =  "" + hourtoretarget + " hrs"
         timetoretarget =  "" + mintotarget + " mins" if change < 120
