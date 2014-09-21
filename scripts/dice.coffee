@@ -47,7 +47,7 @@ module.exports = (robot) ->
         mul = ((max/bet)*0.981).toFixed(4)
         win = (amount*mul).toFixed(5)
         maxwin = (house/4).toFixed(5)
-        maxamount = maxwin/mul
+        maxamount = (maxwin/mul).toFixed(5)
         if amount > maxamount
           msg.send "#{msg.message.user.name}: maximum for this bet is #{maxamount}₥"
           return
@@ -80,7 +80,7 @@ module.exports = (robot) ->
         odds = (bet/max).toFixed(4)
         mul = ((max/bet)*0.981).toFixed(4)
         maxwin = (house/4).toFixed(5)
-        maxamount = maxwin/mul
+        maxamount = (maxwin/mul).toFixed(5)
         amount = Math.min( points[msg.message.user.name], 500000, maxamount )
         if amount < 1
           msg.send "#{msg.message.user.name}: amount must be 1₥ or higher"
