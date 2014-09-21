@@ -46,7 +46,7 @@ module.exports = (robot) ->
         net += "Diff: #{json.data.current.difficulty}"
         net += ", next: ~#{nextdiff} (confidence #{confidence}%)" if change < 660
         net += " - Last Retarget: #{elapsedretargettime} ago, "
-        net += "change in #{change} blocks (Approx #{timetoretarget}) - "
+        net += "change in #{change} blocks (~#{timetoretarget}) "
         msg.send net
         
   robot.hear /^(address) b([\w\S]+)$/i, (msg) ->
