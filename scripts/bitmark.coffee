@@ -8,7 +8,7 @@
 #   address <address> - get btm address info
 
 module.exports = (robot) ->
-  robot.hear /^(network|net|Network|Net)$/i, (msg) ->
+  robot.hear /^(network|net)$/i, (msg) ->
     robot.http("http://bitmark.co/statistics/data/livesummary.json")
       .get() (err, res, body) ->
         json = JSON.parse(body)
@@ -44,10 +44,10 @@ module.exports = (robot) ->
         net += "Next Diff: ~#{nextdiff} (confidence #{confidence}%)" if change < 660
         msg.send net
         
-  robot.hear /^(address|Address) b([\w\S]+)$/i, (msg) ->
+  robot.hear /^(address) b([\w\S]+)$/i, (msg) ->
     checkAddress msg, "b#{msg.match[2]}"
 
-  robot.hear /^(address|Address) foundation$/i, (msg) ->
+  robot.hear /^(address) foundation$/i, (msg) ->
     checkAddress msg, "bQmnzVS5M4bBdZqBTuHrjnzxHS6oSUz6cG"
   
   robot.hear /^(supply|Supply)$/i, (msg) ->
@@ -62,7 +62,7 @@ module.exports = (robot) ->
         net += "there is #{diff} less BTM in the world"
         msg.send net
         
-  robot.hear /^(polo|Polo|poloniex|Poloniex)$/i, (msg) ->
+  robot.hear /^(polo|poloniex)$/i, (msg) ->
     robot.http("https://poloniex.com/public?command=returnTicker")
       .get() (err, res, body) ->
         json = JSON.parse(body)
@@ -74,7 +74,7 @@ module.exports = (robot) ->
         price += " - VWAP: #{vwa}\n"
         msg.send price
         
-  robot.hear /^(trex|Trex|bittrex|Bittrex)$/i, (msg) ->
+  robot.hear /^(trex|bittrex)$/i, (msg) ->
     robot.http("https://bittrex.com/api/v1.1/public/getmarketsummary?market=btc-btm")
       .get() (err, res, body) ->
         json = JSON.parse(body)
@@ -85,7 +85,7 @@ module.exports = (robot) ->
         price += " - VWAP: #{vwa}\n"
         msg.send price
         
-  robot.hear /^(market|Market|markets|Markets)$/i, (msg) ->
+  robot.hear /^(market|markets)$/i, (msg) ->
     robot.http("https://poloniex.com/public?command=returnTicker")
       .get() (err, res, body) ->
         json = JSON.parse(body)
