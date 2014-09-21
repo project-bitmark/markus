@@ -44,7 +44,7 @@ module.exports = (robot) ->
         net += "Target: #{target} - "
         net += "Hashrate: #{hl}, #{hm}, #{hs} GH/s\n"
         net += "Last Retarget: #{elapsedretargettime} ago - "
-        net += "Next: #{change} (Approx #{timetoretarget}) - "
+        net += "Change in #{change} blocks (Approx #{timetoretarget}) - "
         net += "Performance: #{performance}%" if change < 660
         msg.send net
         
