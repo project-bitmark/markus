@@ -37,15 +37,15 @@ module.exports = (robot) ->
         target = (((json.data.current.difficulty*4294967296)/120)/1000000000).toFixed(2) + " GH/s"
         net = "Block: http://bitmark.co:3000/block/#{json.data.current.hash}|#{json.generated} - "
         net += "Diff: #{json.data.current.difficulty} - "
+        net += "Next Diff: ~#{nextdiff} (confidence #{confidence}%) - " if change < 660
         timesincelastretargethrs = (timesincelastretarget/3600).toFixed(2)
         elapsedretargettime = "" + timesincelastretargethrs + " hrs"
         elapsedretargettime =  "" + (timesincelastretargethrs*60) + " mins" if timesincelastretargethrs < 2
-        net += "Last Retarget: #{elapsedretargettime} ago - "
         net += "Target: #{target} - "
-        net += "Hashrate: #{hl}, #{hm}, #{hs} GH/s - "
-        net += "Change: #{change} (Approx #{timetoretarget}) - "
-        net += "Performance: #{performance}% - " if change < 660
-        net += "Next Diff: ~#{nextdiff} (confidence #{confidence}%)" if change < 660
+        net += "Hashrate: #{hl}, #{hm}, #{hs} GH/s\n"
+        net += "Last Retarget: #{elapsedretargettime} ago - "
+        net += "Next: #{change} (Approx #{timetoretarget}) - "
+        net += "Performance: #{performance}%" if change < 660
         msg.send net
         
   robot.hear /^(address) b([\w\S]+)$/i, (msg) ->
