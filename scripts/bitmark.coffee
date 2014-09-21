@@ -72,6 +72,8 @@ module.exports = (robot) ->
         price += "Volume: #{btm.baseVolume} BTC / #{btm.quoteVolume} BTM - "
         vwa = (btm.baseVolume/btm.quoteVolume).toFixed(8)
         price += "VWAP: #{vwa}\n"
+        spread = btm.lowestAsk - btm.highestBid
+        price += " - Spread: #{spread}"
         msg.send price
     robot.http("https://bittrex.com/api/v1.1/public/getmarketsummary?market=btc-btm")
       .get() (err, res, body) ->
@@ -81,6 +83,8 @@ module.exports = (robot) ->
         price += "Volume: #{btm.BaseVolume} BTC / #{btm.Volume} BTM - "
         vwa = (btm.BaseVolume/btm.Volume).toFixed(8)
         price += "VWAP: #{vwa}\n"
+        spread = btm.Ask - btm.Bid
+        price += " - Spread: #{spread}"
         msg.send price
 
 checkAddress = (msg, address) ->
