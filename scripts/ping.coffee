@@ -6,6 +6,7 @@
 #   hubot echo <text> - Reply back with <text>
 #   hubot time - Reply with current time
 #   hubot die - End hubot process
+#   hubot datastructure - Show debug of datastructure msg.message
 
 module.exports = (robot) ->
   robot.respond /PING$/i, (msg) ->
@@ -25,4 +26,7 @@ module.exports = (robot) ->
     
   robot.hear /^pad$/i, (msg) ->
     msg.send "http://piratepad.nl/ep/pad/create?padId=bitmark|newpad"
+    
+  robot.hear /^datastructure$/i, (msg) ->
+    msg.send JSON.stringify(msg.message)
 
