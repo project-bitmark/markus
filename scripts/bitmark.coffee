@@ -39,8 +39,8 @@ module.exports = (robot) ->
         net += "Diff: #{json.data.current.difficulty} - "
         net += "Target: #{target} - "
         net += "Hashrate: #{hl} #{hm} #{hs} MH/s - "
-        net += "Change: #{change} (Approx #{timetoretarget}) - "
-        net += "Performance: #{performance}% - " if change < 660
+        net += "Change: #{change} (Approx #{timetoretarget})"
+        net += " - Performance: #{performance}% - " if change < 660
         net += "Next Diff: ~#{nextdiff} (confidence #{confidence}%)" if change < 660
         msg.send net
         
@@ -50,7 +50,7 @@ module.exports = (robot) ->
   robot.hear /^(address) foundation$/i, (msg) ->
     checkAddress msg, "bQmnzVS5M4bBdZqBTuHrjnzxHS6oSUz6cG"
   
-  robot.hear /^(supply)$/i, (msg) ->
+  robot.hear /^(supply|Supply)$/i, (msg) ->
     robot.http("http://bitmark.co/statistics/data/livesummary.json")
       .get() (err, res, body) ->
         json = JSON.parse(body)
@@ -62,16 +62,39 @@ module.exports = (robot) ->
         net += "there is #{diff} less BTM in the world"
         msg.send net
         
-  robot.hear /^(market|markets|polo)$/i, (msg) ->
+  robot.hear /^(polo|poloniex)$/i, (msg) ->
     robot.http("https://poloniex.com/public?command=returnTicker")
       .get() (err, res, body) ->
         json = JSON.parse(body)
         btm = json.BTC_BTM
         pc = Math.round(btm.percentChange * 100, 2)
         price = "*POLO*: Last: #{btm.last} - "
-        price += "Volume: #{btm.baseVolume} BTC / #{btm.quoteVolume} BTM - "
+        price += "Volume: #{btm.baseVolume} BTC / #{btm.quoteVolume} BTM "
         vwa = (btm.baseVolume/btm.quoteVolume).toFixed(8)
-        price += "VWAP: #{vwa}\n"
+        price += " - VWAP: #{vwa}\n"
+        msg.send price
+        
+  robot.hear /^(trex|bittrex)$/i, (msg) ->
+    robot.http("https://bittrex.com/api/v1.1/public/getmarketsummary?market=btc-btm")
+      .get() (err, res, body) ->
+        json = JSON.parse(body)
+        btm = json.result[0]
+        price = "*BITT*: Last: #{btm.Last} - "
+        price += "Volume: #{btm.BaseVolume} BTC / #{btm.Volume} BTM"
+        vwa = (btm.BaseVolume/btm.Volume).toFixed(8)
+        price += " - VWAP: #{vwa}\n"
+        msg.send price
+        
+  robot.hear /^(market|markets)$/i, (msg) ->
+    robot.http("https://poloniex.com/public?command=returnTicker")
+      .get() (err, res, body) ->
+        json = JSON.parse(body)
+        btm = json.BTC_BTM
+        pc = Math.round(btm.percentChange * 100, 2)
+        price = "*POLO*: Last: #{btm.last} - "
+        price += "Volume: #{btm.baseVolume} BTC / #{btm.quoteVolume} BTM"
+        vwa = (btm.baseVolume/btm.quoteVolume).toFixed(8)
+        price += " - VWAP: #{vwa}\n"
         msg.send price
     robot.http("https://bittrex.com/api/v1.1/public/getmarketsummary?market=btc-btm")
       .get() (err, res, body) ->
