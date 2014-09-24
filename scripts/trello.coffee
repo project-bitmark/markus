@@ -43,7 +43,7 @@ createCard = (msg, list, cardName) ->
     if err
       msg.send "There was an error creating the card"
       return
-  msg.send data.url if msg.message.user.room != "general"
+    msg.send data.url if msg.message.user.room != "general"
 
 showCards = (msg, list) ->
   Trello = require("node-trello")
